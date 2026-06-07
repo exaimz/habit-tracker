@@ -8,3 +8,37 @@
     100% { opacity: 1; transform: translateY(0); }
   }
 }
+
+/* Custom overrides to make react-calendar look dark and minimal */
+.react-calendar {
+  background: transparent !important;
+  border: none !important;
+  font-family: inherit !important;
+  color: #f4f4f5 !important; /* zinc-100 */
+}
+
+.react-calendar__tile:hover {
+  background-color: #27272a !important; /* zinc-800 */
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now {
+  background-color: transparent !important; /* emerald-600 */
+  color: rgb(217, 255, 0) !important;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--active {
+  background: #10b981 !important; /* emerald-500 */
+  color: white !important;
+  border-radius: 8px;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #27272a !important;
+}
+
+.react-calendar__navigation today {
+  background-color: #10b981 !important;
+  color: white !important;
+}
