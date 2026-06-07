@@ -1,28 +1,38 @@
 import { useState, useEffect } from "react";
-import { Plus, Check, Award, Flame, Calendar, Trash2 } from "lucide-react";
+import { Plus, Check, Award, Flame, Trash2 } from "lucide-react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { Calendar } from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const INITIAL_HABITS = [];
 
-  // Generate an array of the last 7 days
-  const daysOfWeek = Array.from({ length: 7 }).map((_, index) => {
-    const date = new Date();
-    date.setDate(date.getDate() - (6 - index)); // Go back up to 6 days ago
-    return {
-      name: date.toLocaleDateString("en-US", { weekday: "short" }).slice(0, 1), // "M", "T", "W"...
-      number: date.getDate(),
-      fullDate: date.toLocaleDateString("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      }),
-      isToday: date.toDateString() === new Date().toDateString(),
-    };
-  });
+// Generate an array of the last 7 days
+const daysOfWeek = Array.from({ length: 7 }).map((_, index) => {
+  const date = new Date();
+  date.setDate(date.getDate() - (6 - index)); // Go back up to 6 days ago
+  return {
+    name: date.toLocaleDateString("en-US", { weekday: "short" }).slice(0, 1), // "M", "T", "W"...
+    number: date.getDate(),
+    fullDate: date.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    }),
+    isToday: date.toDateString() === new Date().toDateString(),
+  };
+});
 
 function App() {
-
   const [selectedDate, setSelectedDate] = useState(daysOfWeek[6].fullDate);
+  const handleCalendarChange = (clickedDate) => {
+    const formattedString = clickedDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    setSelectedDate(formattedString);
+  };
+
   const [habits, setHabits] = useState(() => {
     const savedHabits = localStorage.getItem("minimal-habits");
     return savedHabits ? JSON.parse(savedHabits) : INITIAL_HABITS;
@@ -398,6 +408,14 @@ function App() {
                 No streaks yet.
               </p>
             )}
+          </div>
+          <div className="flex justify-center w-full">
+            <div className="w-full max-w-[320px] bg-zinc-900/40 border border-zinc-800/60 p-4 rounded-2xl backdrop-blur-sm">
+              <Calendar
+                onChange={handleCalendarChange}
+                value={new Date(selectedDate + `, ${new Date().getFullYear()}`)}
+              />
+            </div>
           </div>
         </aside>
       </div>
