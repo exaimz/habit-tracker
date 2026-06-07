@@ -1,3 +1,7 @@
+import { registerSW } from 'virtual:pwa-register'
+
+// Automatically check for app updates every hour and register the service worker
+registerSW({ immediate: true })
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
